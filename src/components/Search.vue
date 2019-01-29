@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" id="location-search" name="location" v-model="locationInput" autocomplete placeholder="city or zip">
+    <input type="text" id="location-search" name="location" v-model="locationInput" autocomplete placeholder="Enter City or zip">
   </div>
 </template>
 
@@ -12,17 +12,35 @@ export default {
   },
   data() {
       return {
-          location: ''
+          location: '',
+          locationInput: ''
       }
   },
   computed: {
       updateLocation() {
-          this.location = this.$store.getters.location
-      }
+          let result = this.$store.getters.location
+          if ( result ) {
+              return result
+          }
+      },
+      
+      
+  },
+  mounted() {
+      document.getElementById('location-search').addEventListener('keydown', (e) =>{
+          if( e.which == 13) {
+              this.$store.dispatch('requestLocationByAddress', {address: this.locationInput}).then( response => {
+                  console.log('city: ', response)
+              })
+          }
+      })
   },
   created() {
       // request location
-      this.$store.dispatch('requestLocation')
+      
+  },
+  methods: {
+
   }
 }
 </script>

@@ -1,17 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Search/>
+    <Weather msg="Welcome to Your Vue.js App"/>
+    <a href="https://darksky.net/poweredby/"><p>Powered by Dark Sky</p></a>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Weather from './components/Weather.vue'
+import Search from './components/Search.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    Weather,
+    Search
+  },
+  created() {
+    this.$store.dispatch('requestLatLonFromDevice').then( (latlon) => {
+        if ( latlon !== false ) {
+          console.log('dispatch request')
+          // console.log(latlon)
+          // this.$store.dispatch('requestLocationFromAPI', latlon)
+        } else {
+          this.$store.dispatch('requestLocaitonFromUser')
+        }
+    })
+    
   }
 }
 </script>
