@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const http = require('http').Server(app)
 const path = require('path')
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 const fetch = require('node-fetch')
 const API_KEY = process.env["DARKSKYKEY"]
 
