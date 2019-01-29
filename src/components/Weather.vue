@@ -1,8 +1,8 @@
 <template>
   <div class="hello">
-    <h1>{{this.weather.temp}}</h1>
+    <h1>{{currentWeather ? currentWeather.apparentTemperature : '--'}}°</h1>
     <img :src="weatherIcon" :alt="weather.icon"/>
-    <p>{{this.weather.summary}}</p>
+    <p>{{currentWeather ? currentWeather.summary : '--'}}</p>
   </div>
 </template>
 
@@ -22,6 +22,20 @@ export default {
     msg: String
   },
   computed: {
+    currentWeather() {
+      let w = this.$store.getters.weather
+      console.log('weather', w)
+      if ( w.hasOwnProperty("currently") ) {
+        return w.currently
+      } else {
+        return null
+      }
+    },
+    
+    weatherIcon() {
+      let w = this.$store.getters.weather
+      return this.thingWrapper()
+    },
     weatherStr() {
       let temp = this.$store.getters.weather.temp
       let str = temp + '°'
@@ -31,6 +45,9 @@ export default {
       let { type } = this.weather
       return `${type}.png`
     }
+  },
+  methods: {
+    
   }
 }
 </script>
