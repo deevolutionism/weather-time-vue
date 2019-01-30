@@ -16,6 +16,8 @@ if( process.env.NODE_ENV == "dev" ) {
 
 }
 
+var temp_storage = {} // could be replaced with redis
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded( {extended: true} ))
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -65,21 +67,66 @@ app.get('/test', async (req, res) => {
 })
 
 app.get('/api/icons', async (req, res) => {
-    const url = "https://api.thenounproject.com/user/ziman.jan/uploads"
-    let nounProject = new NounProject({
-        key: NOUN_PROJECT_KEY,
-        secret: NOUN_PROJECT_SECRET
+    // get the json and store the results
+    if( "icons" in temp_storage ) {
+        res.json(temp_storage.icons)
+        return
+    }
+
+    const iconlist = [
+        1518153,
+        1518107,
+        1518229,
+        1518103,
+        1518234,
+        1518170,
+        1518104,
+        1518165,
+        1518234,
+        1518219,
+        1518105,
+        1518219,
+        1518105
+    ]
+
+    let iconResponse = new Promise( (resolve, reject) => {
+        let icons = []
+        iconlist.forEach( id => {
+            let nounProject = new NounProject({
+                key: NOUN_PROJECT_KEY,
+                secret: NOUN_PROJECT_SECRET
+            })
+            nounProject.getIconById(id, ( err, data ) => {
+                if ( err ) {
+                    console.log(err)
+                    reject(err)
+                    return
+                }
+                console.log(data)
+                icons.push(data)
+            })
+        })
+        resolve(icons)
+    }).then( data => {
+        console.log('success')
+        temp_storage.icons = data
+        res.json(temp_storage.icons)
     })
 
-    nounProject.getUserUploads('ziman.jan', ( err, data ) => {
-        if ( err ) {
-            console.log(err)
-            return
-        }
-        console.log(data)
-        res.json(data) 
-    })
-
+    // const url = "https://api.thenounproject.com/user/ziman.jan/uploads"
     
+
+    // nounProject.getUserUploads('ziman.jan', ( err, data ) => {
+    //     if ( err ) {
+    //         console.log(err)
+    //         return
+    //     }
+    //     console.log(data)
+    //     temp_storage.icons = data
+    //     res.json(data) 
+    // })
+
+    // nounProject.getIconById()
     
 })
+

@@ -1,5 +1,5 @@
 <template>
-    <div class="card d-flex">
+    <div class="card d-flex" :id="compute_id">
         <p>{{day}}</p>
         <img :src="weather.icon" :alt="weather.icon"/>
         <h3>{{weather.apparentTemperatureHigh}}° / {{weather.apparentTemperatureLow}}°</h3>
@@ -17,19 +17,28 @@ export default {
         }
     },
     computed: {
+        compute_id() {
+            let id = `${this.getDayOfWeek(this.weather.time)}-${this.weather.time}`
+            return id
+        },
         day() {
-            let day = new Date(this.weather.time*1000).getDay()
-            console.log('day', day, 'time', this.weather.time)
-            console.log(weekmap)
+            let day = this.getDayOfWeek(this.weather.time)
+            return day
+        },
+    },
+    methods: {
+        getDayOfWeek(timestamp) {
+            let day = new Date(timestamp*1000).getDay
             day = weekmap.weekmap[day]
-            
             return day
         }
+    },
+    mounted() {
+
     }
 }
 </script>
 
 <style lang="scss">
-    
 </style>
 

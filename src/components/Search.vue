@@ -28,9 +28,10 @@ export default {
   mounted() {
       document.getElementById('location-search').addEventListener('keydown', (e) =>{
           if( e.which == 13) {
-              this.$store.dispatch('requestLocationByAddress', {address: this.locationInput}).then( response => {
-                  console.log('city: ', response)
-              })
+              console.log(this.locationInput)
+            //   this.$store.dispatch('requestLocationByAddress', {address: this.locationInput}).then( response => {
+            //       console.log('city: ', response)
+            //   })
           }
       })
   },

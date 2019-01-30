@@ -1,4 +1,4 @@
-const iconMap = {
+const iconmap = {
     "rain": { "night": 1518153, "day": 1518107 },
     "wind": { "night": 1518229, "day": 1518103 },
     "clear-day": { "night": 1518234, "day": 1518107 },
@@ -8,4 +8,8 @@ const iconMap = {
     "fog": { "night": 1518234, "day": 1518107 },
     "sleet": { "night": 1518219, "day": 1518105 },
     "snow": { "night": 151219, "day": 1518105 }
+}
+
+module.exports = {
+    iconmap
 }

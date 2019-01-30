@@ -60,7 +60,9 @@ export default {
     }
   }
 
-
+  body {
+    margin: 0;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -111,7 +113,8 @@ export default {
     }
   }
   .card {
-    
+    border-top: 1px solid #eee;
+    color: white;
     border-left: 0px;
     border-right: 0px;
     border-bottom: 0px;
@@ -120,6 +123,9 @@ export default {
     justify-content: space-between;
     flex-direction: row;
     box-sizing: border-box;
+    align-items: center;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 50%, rgba(0,212,255,1) 100%);
     p, img, h3 {
       display: block;
     }
