@@ -18,13 +18,12 @@ export default {
   },
   computed: {
       updateLocation() {
-          let result = this.$store.getters.location
+          let results = this.$store.getters.location
           if ( result ) {
+              console.log(result)
               return result
           }
       },
-      
-      
   },
   mounted() {
       document.getElementById('location-search').addEventListener('keydown', (e) =>{

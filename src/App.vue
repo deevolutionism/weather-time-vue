@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <Search/>
-    <Weather/>
-    <div class="d-flex horizontal-slider flex-row">
+    <header>
+      <Search/>
+      <Weather/>
+    </header>
+    <div class="d-flex horizontal-slider center">
       <WeatherCard v-for="(forecast, idx) in weatherData" :weather="forecast" v-bind:key="idx" />
     </div>
-    <a href="https://darksky.net/poweredby/"><p>Powered by Dark Sky</p></a>
+    <footer>
+     <a href="https://darksky.net/poweredby/"><p>Powered by Dark Sky</p></a>
+    </footer>
   </div>
 </template>
 
@@ -46,32 +50,84 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  justify-content: space-evenly;
-}
-.component-container {
-  margin: 0 auto;
-}
-.d-flex {
-  display: flex;
-}
-.flex-row {
-  flex-direction: row;
-}
-.flex-column {
-  flex-direction: column;
-}
-.horizontal-slider {
-  overflow-y: scroll;
-}
+<style lang="scss">
+  $mobile-width: 400px;
+  $desktop-width: 1024px;
 
+  @mixin mobile {
+    @media (min-width: #{$mobile-width}) and (max-width: #{desktop-width - 1px}) {
+      @content
+    }
+  }
+
+
+  #app {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  h1 {
+    font-size: 3rem;
+  }
+  header {
+    position: sticky;
+    top: 0;
+    padding: 2rem;
+    background-color: white;
+  }
+  footer {
+    position: sticky;
+    bottom: 0px;
+    background-color: white;
+  }
+  .component-container {
+    margin: 0 auto;
+  }
+  .d-flex {
+    display: flex;
+  }
+  .flex-row {
+    flex-direction: row;
+  }
+  .flex-column {
+    flex-direction: column;
+  }
+  .center {
+    margin: 0 auto;
+  }
+  .horizontal-slider {
+    
+    flex-direction: column;
+    margin: 0px;
+    @include mobile {
+      flex-direction: row;
+      overflow-x: scroll;
+    }
+  }
+  .card {
+    
+    border-left: 0px;
+    border-right: 0px;
+    border-bottom: 0px;
+    min-width: 100%;
+    padding: 1rem;
+    justify-content: space-between;
+    flex-direction: row;
+    box-sizing: border-box;
+    p, img, h3 {
+      display: block;
+    }
+    @include mobile {
+      justify-content: space-between;
+      flex-direction: column;
+      min-width: 240px;
+      border: 1px solid #333;
+    }
+  }
 </style>

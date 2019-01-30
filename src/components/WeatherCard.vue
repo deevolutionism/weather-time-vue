@@ -1,8 +1,8 @@
 <template>
-    <div class="card">
+    <div class="card d-flex">
         <p>{{day}}</p>
         <img :src="weather.icon" :alt="weather.icon"/>
-        <h3>{{weather.apparentTemperatureHigh}}°/{{weather.apparentTemperatureLow}}°</h3>
+        <h3>{{weather.apparentTemperatureHigh}}° / {{weather.apparentTemperatureLow}}°</h3>
     </div>
 </template>
 
@@ -30,8 +30,6 @@ export default {
 </script>
 
 <style lang="scss">
-    .card {
-        border: 1px solid #333;
-    }
+    
 </style>
 

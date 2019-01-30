@@ -102,23 +102,22 @@ export default new Vuex.Store({
       }
 
       let json = await response.json()
-      console.log(json)
       commit('setLocation', json)
       
     },
     async requestLocationByAddress({commit}, params) {
       let { address } = params
       console.log('request data by address: ', address)
-
+  
       let response = await fetch(`/api/geocode/address?address=${address}`)
       if( !response.ok && response.status !== 200) {
         console.log(response.statusText)
         return
       }
-
+  
       let json = response.json()
-      console.log(json)
-
+      let latlon = { lat, lng } = json.results[0].geometry.location
+      commit('setLocation', {lat: latlon.lat, lon: atlon.lng })
     },
     async requestWeather({commit}, {lat, lon, units}) {
       /*
@@ -135,7 +134,6 @@ export default new Vuex.Store({
         return
       }
       let json = await response.json()
-      console.log(json)
       commit('updateWeather', json)
     }
   }
