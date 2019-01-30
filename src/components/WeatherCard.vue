@@ -39,7 +39,7 @@ export default {
         },
         calcHue(temp) {
             let output_start = 250
-            let output_end = 0
+            let output_end = -30
             let input_start = 0 
             let input_end = 100
             let slope = ( output_end - output_start ) / ( input_end - input_start )

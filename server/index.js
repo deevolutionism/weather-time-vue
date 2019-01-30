@@ -31,6 +31,11 @@ app.get('/api/darksky', async ( req, res ) => {
     console.log(req.query)
     let { lat, lon, units } = req.query
     let response = await fetch(`${darksky_base}/${lat},${lon}?units=${units}`)
+    if ( !response.ok || response.status !== 200) {
+        
+        console.log(response.statusText, response.status)
+        return
+    }
     let json = await response.json()
     res.json(json)
 })
@@ -89,44 +94,32 @@ app.get('/api/icons', async (req, res) => {
         1518105
     ]
 
-    let iconResponse = new Promise( (resolve, reject) => {
-        let icons = []
-        iconlist.forEach( id => {
-            let nounProject = new NounProject({
-                key: NOUN_PROJECT_KEY,
-                secret: NOUN_PROJECT_SECRET
-            })
-            nounProject.getIconById(id, ( err, data ) => {
-                if ( err ) {
-                    console.log(err)
-                    reject(err)
-                    return
-                }
-                console.log(data)
-                icons.push(data)
-            })
-        })
-        resolve(icons)
-    }).then( data => {
-        console.log('success')
-        temp_storage.icons = data
-        res.json(temp_storage.icons)
+    let promises = []
+    iconlist.forEach( icon => {
+        promises.push( getIconById(icon) )
     })
 
-    // const url = "https://api.thenounproject.com/user/ziman.jan/uploads"
-    
-
-    // nounProject.getUserUploads('ziman.jan', ( err, data ) => {
-    //     if ( err ) {
-    //         console.log(err)
-    //         return
-    //     }
-    //     console.log(data)
-    //     temp_storage.icons = data
-    //     res.json(data) 
-    // })
-
-    // nounProject.getIconById()
+    Promise.all(promises).then( (result) => {
+        console.log(result.length)
+        res.json(result)
+    })
     
 })
 
+function getIconById (id) {
+    return new Promise( (resolve, reject) => {
+        let nounProject = new NounProject({
+            key: NOUN_PROJECT_KEY,
+            secret: NOUN_PROJECT_SECRET
+        })
+        nounProject.getIconById(id, ( err, data ) => {
+            if ( err ) {
+                console.log(err)
+                reject(err)
+                return
+            }
+            console.log(data)
+            resolve(data)
+        })
+    })
+}

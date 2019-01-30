@@ -10,6 +10,7 @@ set the env variables from the terminal window
 you will be running the dev environment with.
 set DARKSKY_KEY=yourkeyhere
 set GOOGLE_GEOCODE_KEY=youkeyhere
+set IPDATA_KEY=yourkeyhere
 
 ### Compiles and hot-reloads for development
 ```
