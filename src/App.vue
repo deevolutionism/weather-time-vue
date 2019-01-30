@@ -29,7 +29,7 @@ export default {
     weatherData() {
       let w = this.$store.getters.weather
       if( "daily" in w ) {
-        return w.daily.data
+        return w.daily.data // exclude the current day
       } else {
         return []
       }

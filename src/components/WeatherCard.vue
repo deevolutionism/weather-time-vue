@@ -52,7 +52,7 @@ export default {
         console.log(this.weather.apparentTemperatureHigh)
         let hueHigh = this.calcHue(this.weather.apparentTemperatureHigh)
         let hueLow = this.calcHue(this.weather.apparentTemperatureLow)
-        let hslcolor = `linear-gradient(90deg, hsla(${hueHigh},75%,50%) 0%, hsla(${hueLow},75%,50%) 100%)`
+        let hslcolor = `linear-gradient(90deg, hsla(${hueHigh},75%,70%) 0%, hsla(${hueLow},75%,20%) 100%)`
         document.getElementById(this.compute_id).style.background = hslcolor
         console.log('hue', hueHigh, 'id', this.compute_id)
     }
