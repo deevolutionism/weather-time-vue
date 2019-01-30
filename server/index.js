@@ -9,7 +9,8 @@ const fetch = require('node-fetch')
 const DARKSKY_KEY = process.env["DARKSKY_KEY"]
 const GOOGLE_GEOCODE_KEY = process.env["GOOGLE_GEOCODE_KEY"]
 const NOUN_PROJECT_SECRET = process.env["NOUN_PROJECT_SECRET"]
-const NOUN_PROJECT_KEY = process.env["NOUNT_PROJECT_KEY"]
+const NOUN_PROJECT_KEY = process.env["NOUN_PROJECT_KEY"]
+const IPDATA_KEY = process.env["IPDATA_KEY"]
 
 if( process.env.NODE_ENV == "dev" ) {
 
@@ -24,6 +25,7 @@ const darksky_base = `https://api.darksky.net/forecast/${DARKSKY_KEY}`
 const geocode_base = `https://maps.googleapis.com/maps/api/geocode/json?key=${GOOGLE_GEOCODE_KEY}&sensor=true`
 
 app.get('/api/darksky', async ( req, res ) => {
+    // get weather from darksky using lat lon
     console.log(req.query)
     let { lat, lon, units } = req.query
     let response = await fetch(`${darksky_base}/${lat},${lon}?units=${units}`)
@@ -32,11 +34,20 @@ app.get('/api/darksky', async ( req, res ) => {
 })
 
 app.get('/api/geocode/latlon', async (req, res) => {
+    // get a human readable address from lat lon coordinates
     let { lat, lon } = req.query
     let response = await fetch(`${geocode_base}&latlng=${lat},${lon}`)
     let json = await response.json()
     res.json(json)
-    res.json({lat, lon})
+})
+
+app.get('/api/latlonfromip', async (req, res) => {
+    let ip = req.connection.remoteAddress
+    console.log(ip)
+    // let response = await fetch(`https://api.ipdata.co/${ip}?api-key=${IPDATA_KEY}`)
+    // let json = await response.json()
+
+    res.json(ip)
 })
 
 app.get('/api/geocode/address', async (req, res) => {
