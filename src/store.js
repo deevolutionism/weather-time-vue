@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import geolocation from './modules/geolocation'
+import iconmap from './modules/iconmap'
 
 Vue.use(Vuex)
 
@@ -56,6 +57,13 @@ export default new Vuex.Store({
       }
       
       let json = await response.json()
+
+      let icons = {}
+      json.uploads.forEach( icon => {
+        if( icon.id in iconmap ) {
+          icons[icon.id] = icon.preview_url
+        }
+      })
       
       commit('updateIcons', json)
     },
@@ -115,9 +123,12 @@ export default new Vuex.Store({
         return
       }
   
-      let json = response.json()
-      let latlon = { lat, lng } = json.results[0].geometry.location
-      commit('setLocation', {lat: latlon.lat, lon: atlon.lng })
+      let json = await response.json()
+      let lat = json.results[0].geometry.location.lat
+      let lon = json.results[0].geometry.location.lng
+      console.log(lat, lon)
+      commit('setLocation', {lat, lon })
+      this.dispatch('requestWeather', {lat, lon, units: 'auto'})
     },
     async requestWeather({commit}, {lat, lon, units}) {
       /*
@@ -127,7 +138,7 @@ export default new Vuex.Store({
           unit ( str, required, options: si, us, auto)
         }
       */
-     
+      console.log('request weather for coords', lat, lon, units)
       let response = await fetch(`/api/darksky?lat=${lat}&lon=${lon}&units=${units}`)
       if( !response.ok && response.status !== 200){
         console.log(response.statusText)

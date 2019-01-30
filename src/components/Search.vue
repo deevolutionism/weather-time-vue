@@ -26,12 +26,11 @@ export default {
       },
   },
   mounted() {
-      document.getElementById('location-search').addEventListener('keydown', (e) =>{
+
+      document.getElementById('location-search').addEventListener('keydown', (e) => {
           if( e.which == 13) {
               console.log(this.locationInput)
-            //   this.$store.dispatch('requestLocationByAddress', {address: this.locationInput}).then( response => {
-            //       console.log('city: ', response)
-            //   })
+              this.requestLocByAddr(this.locationInput)
           }
       })
   },
@@ -40,7 +39,9 @@ export default {
       
   },
   methods: {
-
+      requestLocByAddr(addr) {
+          this.$store.dispatch('requestLocationByAddress', {address: addr})
+      }
   }
 }
 </script>
