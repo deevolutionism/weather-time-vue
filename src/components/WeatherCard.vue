@@ -18,7 +18,8 @@ export default {
     },
     computed: {
         compute_id() {
-            let id = `${this.getDayOfWeek(this.weather.time)}-${this.weather.time}`
+            let dayofweek = this.getDayOfWeek(this.weather.time)
+            let id = `${dayofweek}-${this.weather.time}`
             return id
         },
         day() {
@@ -28,7 +29,7 @@ export default {
     },
     methods: {
         getDayOfWeek(timestamp) {
-            let day = new Date(timestamp*1000).getDay
+            let day = new Date(timestamp*1000).getDay()
             day = weekmap.weekmap[day]
             return day
         }
