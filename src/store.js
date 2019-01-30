@@ -9,8 +9,26 @@ export default new Vuex.Store({
     location: {},
     latlon: {},
     unit: 'auto',
-    weather: {},
-    error: {}
+    weather: {
+      currently: {
+        summary: '--',
+        apparentTemperature: '--',
+        icon: 'placeholder.png'
+      },
+      daily: {
+        data: [
+          {
+            time: '--',
+            summary: '--',
+            icon: 'placeholder.png',
+            apparentTemperatureHigh: '--',
+            apparentTemperatureLow: '--'
+          }
+        ]
+      }
+    },
+    error: {},
+    icons: {}
   },
   getters: {
     location: state => state.location,
@@ -28,6 +46,19 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    async hydrateState({commit}) {
+    },
+    async requestIcons({commit}) {
+      let response = await fetch('/api/icons')
+      if(!response.ok || response.status !== 200) {P
+        console.log(response.statusText)
+        return
+      }
+      
+      let json = await response.json()
+      
+      commit('updateIcons', json)
+    },
     async requestLatLonFromDevice({commit}) {
       
       if( "geolocation" in navigator ) {

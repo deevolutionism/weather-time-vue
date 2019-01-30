@@ -12,6 +12,8 @@
     "express": "^4.16.4",
     "node-fetch": "^2.3.0",
     "node-sass": "^4.11.0",
+    "request": "^2.88.0",
+    "the-noun-project": "^2.1.0",
     "vue": "^2.5.21",
     "vuex": "^3.0.1"
   },
