@@ -28,22 +28,32 @@ export default new Vuex.Store({
         ]
       }
     },
-    error: {},
+    serviceError: {
+      goecode: false,
+      darksky: false
+    },
     icons: {}
   },
   getters: {
     location: state => state.location,
-    weather: state => state.weather
+    weather: state => state.weather,
+    serviceError: state => state.serviceError
   },
   mutations: {
     setLocation(state, data) {
       state.location = data
+      state.serviceError.geocode = false
     },
     setLatLon(state, data) {
       state.latlon = data
+      state.serviceError.geocode = false
     },
     updateWeather(state, data) {
       state.weather = data
+      state.serviceError.darksky = false
+    },
+    serviceError(state, {service, status}) {
+      state.serviceError[service] = status
     }
   },
   actions: {
@@ -120,6 +130,7 @@ export default new Vuex.Store({
       let response = await fetch(`/api/geocode/address?address=${address}`)
       if( !response.ok && response.status !== 200) {
         console.log(response.statusText)
+        commit('serviceError', {service: "geocode", status: response.statusText})
         return
       }
   
@@ -142,6 +153,7 @@ export default new Vuex.Store({
       let response = await fetch(`/api/darksky?lat=${lat}&lon=${lon}&units=${units}`)
       if( !response.ok && response.status !== 200){
         console.log(response.statusText)
+        commit('serviceError', { service: 'darksky', status: response.statusText})
         return
       }
       let json = await response.json()

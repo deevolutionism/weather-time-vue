@@ -1,8 +1,9 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <h1>{{currentWeather ? currentWeather.apparentTemperature : '--'}}°</h1>
-    <img :src="weatherIcon" :alt="weather.icon"/>
-    <p>{{currentWeather ? currentWeather.summary : '--'}}</p>
+    <img v-show="weatherError ? false : true" class="icon" :src="weatherIcon" :alt="weather.icon"/>
+    <img v-show="weatherError" class="icon" src="../assets/default.svg"/>
+    <p>{{weatherError ? weatherError : currentWeather.summary}}</p>
   </div>
 </template>
 
@@ -13,13 +14,10 @@ export default {
     return {
       weather: {
         temp: 0,
-        icon: 'unknown',
+        icon: 'default',
         summary: 'no data'
       }
     }
-  },
-  props: {
-    msg: String
   },
   computed: {
     currentWeather() {
@@ -28,10 +26,13 @@ export default {
       if ( w.hasOwnProperty("currently") ) {
         return w.currently
       } else {
-        return null
+        return false
       }
     },
-    
+    weatherError() {
+      let error = this.$store.getters.serviceError.darksky
+      return error
+    },
     weatherIcon() {
       let w = this.$store.getters.weather
       return this.thingWrapper()
@@ -53,7 +54,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
 }
@@ -67,5 +68,10 @@ li {
 }
 a {
   color: #42b983;
+}
+.main {
+  .icon {
+    width: 100px;
+  }
 }
 </style>
