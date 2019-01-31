@@ -56,7 +56,7 @@ export default {
   $desktop-width: 1024px;
 
   @mixin mobile {
-    @media (min-width: #{$mobile-width}) and (max-width: #{desktop-width - 1px}) {
+    @media (max-width: #{$mobile-width - 1px}) {
       @content
     }
   }
@@ -111,6 +111,11 @@ export default {
     div {
       border-right: 1px solid black;
       min-width: 200px;
+    }
+    @include mobile {
+      flex-direction: row;
+      overflow-x: scroll;
+      width: 100%;
     }
   }
   .horizontal-slider {
