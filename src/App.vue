@@ -111,6 +111,7 @@ export default {
     div {
       border-right: 1px solid black;
       min-width: 200px;
+      display: inline-block;
     }
     @include mobile {
       flex-direction: row;
@@ -118,8 +119,11 @@ export default {
       width: 100%;
     }
   }
+  .horizontal-slider-fixed {
+    flex-direction: row;
+    overflow-x: scroll;
+  }
   .horizontal-slider {
-    
     flex-direction: column;
     margin: 0px;
     @include mobile {

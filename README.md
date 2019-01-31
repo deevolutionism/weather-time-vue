@@ -28,11 +28,11 @@ git push heroku master
 - [x] request user location for lat lon coords
 - [x] show daily data
 - [x] convert lat lon to human readable address
-- [-] SEO Optimization ( generate static html files, add meta tags )
+- [x] SEO Optimization ( generate static html files, add meta tags, create a no javascript version, add alt attributes )
 - [-] request cookie permissions to store lat lon
-- [-] add icons for "clear-day", "clear-night", "rain", "snow", "sleet", "wind", "fog", "cloudy", "partly-cloudy-day", "partly-cloudy-night",
-- [-] allow user to enter city or zip to update their weather
-- [-] show other meta data such as uv index, humidity, etc
-- [-] animate background based on time of day and weather type
+- [x] add icons for "clear-day", "clear-night", "rain", "snow", "sleet", "wind", "fog", "cloudy", "partly-cloudy-day", "partly-cloudy-night",
+- [x] allow user to enter city or zip to update their weather
+- [x] show other meta data such as uv index, humidity, etc
+- [x] background based on time of day and weather type
 - [-] extra: create a chart showing daily/weekly forecasts
 - [-] user tap should change unit ( si, us, auto )

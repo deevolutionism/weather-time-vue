@@ -20,7 +20,7 @@ export default {
     computed: {
         compute_id() {
             let dayofweek = this.getDayOfWeek(this.weather.time)
-            let id = `${dayofweek}-${this.weather.time}`
+            let id = `${dayofweek}-${this.weather.time}-${this.weather.icon}`
             return id
         },
         dayOfWeek() {

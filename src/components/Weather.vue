@@ -4,14 +4,14 @@
     <h3>feels like {{currentWeather ? currentWeather.apparentTemperature : '--'}}°</h3>
     <img class="icon" :src="getWeatherIcon" :alt="weather.icon"/>
     <p>{{weatherError ? weatherError : currentWeather.summary}}</p>
-    <div class="d-flex flex-row slider">
-      <div><p>precipitation: {{weather.precipProbability}}%</p></div>
-      <div><p>dew point: {{weather.dewPoint}}</p></div>
-      <div><p>humidity: {{weather.humidity}}</p></div>
-      <div><p>wind speed: {{weather.windSpeed}} mph</p></div>
-      <div><p>uv index: {{weather.uvIndex}}</p></div>
-      <div><p>visibility: {{weather.visibility}}</p></div>
-      <div><p>ozone: {{weather.ozone}}</p></div>
+    <div class="d-flex horizontal-slider-fixed center" id="weather-meta-data">
+      <div><p>🌧️ precipitation: {{weather.precipProbability}}%</p></div>
+      <div><p>💧 dew point: {{weather.dewPoint}}</p></div>
+      <div><p>🌫️ humidity: {{weather.humidity}}</p></div>
+      <div><p>💨 wind speed:  {{weather.windSpeed}} mph</p></div>
+      <div><p>☀️ uv index: {{weather.uvIndex}}</p></div>
+      <div><p>👓 visibility: {{weather.visibility}}</p></div>
+      <div><p>😷 ozone: {{weather.ozone}}</p></div>
     </div>
   </div>
 </template>
@@ -113,6 +113,12 @@ a {
 .main {
   .icon {
     width: 100px;
+  }
+}
+#weather-meta-data {
+  box-shadow: 0px 0px 40px -17px;
+  div {
+    min-width: 200px;
   }
 }
 </style>
