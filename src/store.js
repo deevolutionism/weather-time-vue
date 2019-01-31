@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     location: {},
     latlon: {},
-    address: {},
+    address: '',
     unit: 'auto',
     weather: {
       currently: {
@@ -126,11 +126,15 @@ export default new Vuex.Store({
 
       if( !response.ok && response.status !== 200) {
         console.log(response.statusText)
+        commit('serviceError', { service: 'geocode', status: response.statusText })
         return
       }
 
       let json = await response.json()
-      commit('setAddress', json.results[0].address_components[3].short_name)
+      // console.log(json)
+      let short_address = json.results[0].address_components[3].short_name
+      console.log('short address', short_address)
+      commit('setAddress', short_address)
     },
     async requestLocationByAddress({commit}, params) {
       let { address } = params
@@ -148,6 +152,7 @@ export default new Vuex.Store({
       let lon = json.results[0].geometry.location.lng
       let formatted_address = json.results[0].formatted_address
       console.log(lat, lon)
+      console.log('formatted address', formatted_address)
       commit('setLocation', {lat, lon})
       commit('setAddress', formatted_address)
       this.dispatch('requestWeather', {lat, lon, units: 'auto'})

@@ -17,13 +17,6 @@ export default {
       }
   },
   computed: {
-      updateLocation() {
-          let results = this.$store.getters.location
-          if ( result ) {
-              console.log(result)
-              return result
-          }
-      },
       addr: {
           get: function() {
               return this.$store.getters.address
@@ -32,6 +25,14 @@ export default {
               console.log('set', value)
               this.locationInput = value
           }
+      }
+  },
+  watch: {
+      addr(prev, next) {
+        
+            console.log('prev', prev, 'next', next)
+            this.locationInput = next
+
       }
   },
   mounted() {
