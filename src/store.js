@@ -96,6 +96,7 @@ export default new Vuex.Store({
             commit('setLatLon', location)
             let params = { lat: location.coords.latitude, lon: location.coords.longitude, units: 'auto' }
             this.dispatch('requestWeather', params)
+            this.dispatch('requestLocationByLatLon', params)
             // this.dispatch('requestLocationByLatLon', {
             //   lat: location.coords.latitude,
             //   lon: location.coords.longitude
@@ -129,7 +130,7 @@ export default new Vuex.Store({
       }
 
       let json = await response.json()
-      commit('setLocation', json)
+      commit('setAddress', json.results[0].address_components[3].short_name)
     },
     async requestLocationByAddress({commit}, params) {
       let { address } = params

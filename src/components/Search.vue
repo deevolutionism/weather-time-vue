@@ -41,6 +41,7 @@ export default {
               this.dispatchRequestLocByAddr(this.locationInput)
           }
       })
+      this.locationInput = this.$store.getters.address
   },
   created() {
       // request location
