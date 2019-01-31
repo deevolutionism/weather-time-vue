@@ -1,6 +1,6 @@
 <template>
   <div class="component-container">
-    <input class="search" type="text" id="location-search" name="location" v-model="locationInput" autocomplete placeholder="Enter City or zip">
+    <input :class="classObj" type="text" id="location-search" name="location" v-model="locationInput" autocomplete placeholder="Enter City or zip">
   </div>
 </template>
 
@@ -24,6 +24,12 @@ export default {
           set: function(value) {
               console.log('set', value)
               this.locationInput = value
+          }
+      },
+      classObj() {
+          return {
+              "search": true,
+              "empty": this.locationInput ? false : true
           }
       }
   },
@@ -77,6 +83,9 @@ export default {
             color: black;
             outline: 0px;
             border-bottom: 3px solid black;
+        }
+        &.empty {
+            border-bottom: 2px solid orangered;
         }
     }
 </style>
