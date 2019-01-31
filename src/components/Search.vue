@@ -29,12 +29,12 @@ export default {
       classObj() {
           return {
               "search": true,
-              "empty": this.locationInput ? false : true
+              "empty": this.locationInput ? false : true,
           }
       }
   },
   watch: {
-      addr(prev, next) {
+      addr(next, prev) {
         
             console.log('prev', prev, 'next', next)
             this.locationInput = next
