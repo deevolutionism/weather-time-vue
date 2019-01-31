@@ -34,7 +34,7 @@ app.get('/api/darksky', async ( req, res ) => {
     if ( !response.ok || response.status !== 200) {
         
         console.log(response.statusText, response.status)
-        return
+        
     }
     let json = await response.json()
     res.json(json)
@@ -91,7 +91,8 @@ app.get('/api/icons', async (req, res) => {
         1518219,
         1518105,
         1518219,
-        1518105
+        1518105,
+        1518102
     ]
 
     let promises = []

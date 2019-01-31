@@ -30,13 +30,15 @@ export default new Vuex.Store({
     },
     serviceError: {
       goecode: false,
-      darksky: false
+      darksky: false,
+      icons: false,
     },
     icons: {}
   },
   getters: {
     location: state => state.location,
     weather: state => state.weather,
+    icons: state => state.icons,
     serviceError: state => state.serviceError
   },
   mutations: {
@@ -54,6 +56,9 @@ export default new Vuex.Store({
     },
     serviceError(state, {service, status}) {
       state.serviceError[service] = status
+    },
+    updateIcons(state, icons) {
+      state.icons = icons
     }
   },
   actions: {
@@ -63,19 +68,18 @@ export default new Vuex.Store({
       let response = await fetch('/api/icons')
       if(!response.ok || response.status !== 200) {P
         console.log(response.statusText)
+        commit('serviceError', {service: 'nounProject', status: response.statusText})
         return
       }
       
       let json = await response.json()
-
-      let icons = {}
-      json.uploads.forEach( icon => {
-        if( icon.id in iconmap ) {
-          icons[icon.id] = icon.preview_url
-        }
-      })
       
-      commit('updateIcons', json)
+      let icons = {}
+      // console.log(json)
+      json.forEach( icon => {
+          icons[icon.icon.id] = icon.icon.preview_url
+      })
+      commit('updateIcons', icons)
     },
     async requestLatLonFromDevice({commit}) {
       

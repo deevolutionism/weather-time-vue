@@ -45,6 +45,7 @@ export default {
           this.$store.dispatch('requestLocaitonFromUser')
         }
     })
+    this.$store.dispatch('requestIcons')
     
   }
 }
@@ -82,6 +83,7 @@ export default {
     top: 0;
     padding: 2rem;
     background-color: white;
+    z-index: 999;
   }
   footer {
     position: sticky;
@@ -118,6 +120,7 @@ export default {
     border-left: 0px;
     border-right: 0px;
     border-bottom: 0px;
+    background-color: #2c3e50;
     min-width: 100%;
     padding: 1rem;
     justify-content: space-between;
@@ -126,6 +129,10 @@ export default {
     align-items: center;
     p, img, h3 {
       display: block;
+    }
+    img {
+      filter: invert(1);
+      width: 64px;
     }
     @include mobile {
       justify-content: space-between;

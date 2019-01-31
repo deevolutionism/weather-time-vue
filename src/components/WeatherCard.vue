@@ -1,13 +1,14 @@
 <template>
     <div class="card d-flex" :id="compute_id">
-        <p>{{day}}</p>
-        <img :src="weather.icon" :alt="weather.icon"/>
+        <p>{{dayOfWeek}}</p>
+        <img :src="weatherIcon" :alt="weather.icon"/>
         <h3>{{weather.apparentTemperatureHigh}}° / {{weather.apparentTemperatureLow}}°</h3>
     </div>
 </template>
 
 <script>
 import weekmap from '../modules/weekmap'
+import iconmap from '../modules/iconmap'
 export default {
     name: 'WeatherCard',
     props: ['weather'],
@@ -22,13 +23,31 @@ export default {
             let id = `${dayofweek}-${this.weather.time}`
             return id
         },
-        day() {
+        dayOfWeek() {
             let day = this.getDayOfWeek(this.weather.time)
             return day
         },
         getHue() {
             let h = this.calcHue(this.weather.apparentTemperatureHigh)
-            console.log('h', h)
+        },
+        weatherIcon() {
+            // icon name => iconid => iconurl
+            let iconName, iconId, iconUrl, iconlist
+            iconName = this.weather.icon
+            iconlist = this.$store.getters.icons
+            if(iconName) {
+                // iconId = iconmap.iconmap[iconName]
+                // iconUrl = this.$store.getters.icons[iconId]
+                if( iconmap.iconmap.hasOwnProperty(iconName) ) {
+                    // iconUrl = iconmap.iconmap[iconName].day
+                    iconId = iconmap.iconmap[iconName].day
+                    iconUrl = iconlist[iconId]
+                }
+                
+            } else {
+                iconUrl = '#'
+            }
+            return iconUrl
         }
     },
     methods: {
@@ -49,16 +68,16 @@ export default {
     },
     mounted() {
         // calculate hue
-        console.log(this.weather.apparentTemperatureHigh)
         let hueHigh = this.calcHue(this.weather.apparentTemperatureHigh)
         let hueLow = this.calcHue(this.weather.apparentTemperatureLow)
         let hslcolor = `linear-gradient(90deg, hsla(${hueHigh},75%,70%) 0%, hsla(${hueLow},75%,20%) 100%)`
         document.getElementById(this.compute_id).style.background = hslcolor
-        console.log('hue', hueHigh, 'id', this.compute_id)
     }
 }
 </script>
 
 <style lang="scss">
+
+
 </style>
 

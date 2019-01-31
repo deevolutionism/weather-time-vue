@@ -1,13 +1,14 @@
 <template>
   <div class="main">
-    <h1>{{currentWeather ? currentWeather.apparentTemperature : '--'}}°</h1>
-    <img v-show="weatherError ? false : true" class="icon" :src="weatherIcon" :alt="weather.icon"/>
-    <img v-show="weatherError" class="icon" src="../assets/default.svg"/>
+    <h1>{{currentWeather ? currentWeather.temperature : '--'}}°</h1>
+    <h3>feels like {{currentWeather ? currentWeather.apparentTemperature : '--'}}°</h3>
+    <img class="icon" :src="getWeatherIcon" :alt="weather.icon"/>
     <p>{{weatherError ? weatherError : currentWeather.summary}}</p>
   </div>
 </template>
 
 <script>
+import iconmap from '../modules/iconmap'
 export default {
   name: 'Weather',
   data() {
@@ -22,8 +23,8 @@ export default {
   computed: {
     currentWeather() {
       let w = this.$store.getters.weather
-      console.log('weather', w)
       if ( w.hasOwnProperty("currently") ) {
+        this.weather = w.currently
         return w.currently
       } else {
         return false
@@ -33,9 +34,21 @@ export default {
       let error = this.$store.getters.serviceError.darksky
       return error
     },
-    weatherIcon() {
-      let w = this.$store.getters.weather
-      return this.thingWrapper()
+    getWeatherIcon() {
+      let iconName, iconId, iconUrl, iconlist
+      iconName = this.weather.icon
+      iconlist = this.$store.getters.icons
+      console.log('iconlist', iconlist, 'iconName', iconName)
+      if(iconName) {
+          if( iconmap.iconmap.hasOwnProperty(iconName) ) {
+            iconId = iconmap.iconmap[iconName].day
+            console.log('icon name', iconName, 'iconId')
+            iconUrl = iconlist[iconId]
+          }
+      } else {
+          iconUrl = '#'
+      }
+      return iconUrl
     },
     weatherStr() {
       let temp = this.$store.getters.weather.temp
@@ -55,8 +68,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+h1 {
+  margin-bottom: 1rem;
+}
 h3 {
-  margin: 40px 0 0;
+  margin: 1rem 0;
 }
 ul {
   list-style-type: none;
