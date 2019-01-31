@@ -8,12 +8,12 @@
 export default {
   name: 'Search',
   props: {
-    msg: String
   },
   data() {
       return {
           location: '',
-          locationInput: ''
+          locationInput: '',
+          address: ''
       }
   },
   computed: {
@@ -24,13 +24,21 @@ export default {
               return result
           }
       },
+      addr: {
+          get: function() {
+              return this.$store.getters.address
+          },
+          set: function(value) {
+              console.log('set', value)
+              this.locationInput = value
+          }
+      }
   },
   mounted() {
-
       document.getElementById('location-search').addEventListener('keydown', (e) => {
           if( e.which == 13) {
               console.log(this.locationInput)
-              this.requestLocByAddr(this.locationInput)
+              this.dispatchRequestLocByAddr(this.locationInput)
           }
       })
   },
@@ -39,8 +47,12 @@ export default {
       
   },
   methods: {
-      requestLocByAddr(addr) {
+      dispatchRequestLocByAddr(addr) {
           this.$store.dispatch('requestLocationByAddress', {address: addr})
+      },
+      updateInput(address) {
+          
+         this.locationInput = address
       }
   }
 }

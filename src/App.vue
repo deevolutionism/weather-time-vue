@@ -105,6 +105,14 @@ export default {
   .center {
     margin: 0 auto;
   }
+  .slider {
+    justify-content: space-evenly;
+    overflow-x: auto;
+    div {
+      border-right: 1px solid black;
+      min-width: 200px;
+    }
+  }
   .horizontal-slider {
     
     flex-direction: column;
@@ -129,6 +137,15 @@ export default {
     align-items: center;
     p, img, h3 {
       display: block;
+    }
+    .left, .right {
+      flex-grow: 1;
+    }
+    .left {
+      text-align: left;
+    }
+    .middle {
+      flex-grow: 2;
     }
     img {
       filter: invert(1);

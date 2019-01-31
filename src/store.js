@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     location: {},
     latlon: {},
+    address: {},
     unit: 'auto',
     weather: {
       currently: {
@@ -39,7 +40,8 @@ export default new Vuex.Store({
     location: state => state.location,
     weather: state => state.weather,
     icons: state => state.icons,
-    serviceError: state => state.serviceError
+    serviceError: state => state.serviceError,
+    address: state => state.address
   },
   mutations: {
     setLocation(state, data) {
@@ -59,6 +61,9 @@ export default new Vuex.Store({
     },
     updateIcons(state, icons) {
       state.icons = icons
+    },
+    setAddress(state, address) {
+      state.address = address
     }
   },
   actions: {
@@ -125,7 +130,6 @@ export default new Vuex.Store({
 
       let json = await response.json()
       commit('setLocation', json)
-      
     },
     async requestLocationByAddress({commit}, params) {
       let { address } = params
@@ -141,8 +145,10 @@ export default new Vuex.Store({
       let json = await response.json()
       let lat = json.results[0].geometry.location.lat
       let lon = json.results[0].geometry.location.lng
+      let formatted_address = json.results[0].formatted_address
       console.log(lat, lon)
-      commit('setLocation', {lat, lon })
+      commit('setLocation', {lat, lon})
+      commit('setAddress', formatted_address)
       this.dispatch('requestWeather', {lat, lon, units: 'auto'})
     },
     async requestWeather({commit}, {lat, lon, units}) {

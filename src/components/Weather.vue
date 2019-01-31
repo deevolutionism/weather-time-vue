@@ -4,6 +4,15 @@
     <h3>feels like {{currentWeather ? currentWeather.apparentTemperature : '--'}}°</h3>
     <img class="icon" :src="getWeatherIcon" :alt="weather.icon"/>
     <p>{{weatherError ? weatherError : currentWeather.summary}}</p>
+    <div class="d-flex flex-row slider">
+      <div><p>precipitation: {{weather.precipProbability}}%</p></div>
+      <div><p>dew point: {{weather.dewPoint}}</p></div>
+      <div><p>humidity: {{weather.humidity}}</p></div>
+      <div><p>wind speed: {{weather.windSpeed}} mph</p></div>
+      <div><p>uv index: {{weather.uvIndex}}</p></div>
+      <div><p>visibility: {{weather.visibility}}</p></div>
+      <div><p>ozone: {{weather.ozone}}</p></div>
+    </div>
   </div>
 </template>
 
@@ -14,9 +23,25 @@ export default {
   data() {
     return {
       weather: {
-        temp: 0,
-        icon: 'default',
-        summary: 'no data'
+        "time": 1548807292,
+        "summary": "Partly Cloudy",
+        "icon": "partly-cloudy-day",
+        "nearestStormDistance": 196,
+        "nearestStormBearing": 347,
+        "precipIntensity": 0,
+        "precipProbability": 0,
+        "temperature": 15.51,
+        "apparentTemperature": 15.51,
+        "dewPoint": 11.07,
+        "humidity": 0.75,
+        "pressure": 1014.36,
+        "windSpeed": 2.28,
+        "windGust": 3.7,
+        "windBearing": 286,
+        "cloudCover": 0.44,
+        "uvIndex": 0,
+        "visibility": 16.09,
+        "ozone": 233.58
       }
     }
   },

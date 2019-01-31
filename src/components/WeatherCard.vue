@@ -1,8 +1,8 @@
 <template>
     <div class="card d-flex" :id="compute_id">
-        <p>{{dayOfWeek}}</p>
-        <img :src="weatherIcon" :alt="weather.icon"/>
-        <h3>{{weather.apparentTemperatureHigh}}° / {{weather.apparentTemperatureLow}}°</h3>
+        <p class="left">{{dayOfWeek}}</p>
+        <div class="middle"><img :src="weatherIcon" :alt="weather.icon"/></div>
+        <h3 class="right">{{weather.apparentTemperatureHigh}}° / {{weather.apparentTemperatureLow}}°</h3>
     </div>
 </template>
 
